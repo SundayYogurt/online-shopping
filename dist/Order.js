@@ -3,16 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Order = void 0;
 const OrderStatus_1 = require("./OrderStatus");
 class Order {
-    constructor(lineItems, number, ordered, shipped, ship_to, total) {
+    constructor(number, ordered, shipped, ship_to, total, lineItems) {
         this.lineItems = [];
         this.total = 0;
-        this.lineItems = lineItems;
+        this.lineItems = lineItems || [];
         this.number = number;
         this.ordered = ordered;
         this.shipped = shipped;
         this.shipTo = ship_to;
-        this.status = OrderStatus_1.OrderStatus.NEW;
-        this.total = total;
+        this.status = OrderStatus_1.OrderStatus.HOLD;
+        this.total = this.calcTotal();
     }
     getNumber() {
         return this.number;
@@ -30,7 +30,7 @@ class Order {
         return this.status;
     }
     getTotal() {
-        return this.total + this.clacTotal();
+        return this.total;
     }
     setOrdered(ordered) {
         this.ordered = ordered;
@@ -47,7 +47,7 @@ class Order {
     setTotal(total) {
         this.total = total;
     }
-    clacTotal() {
+    calcTotal() {
         let total = 0;
         for (let i = 0; i < this.lineItems.length; i++) {
             total += this.lineItems[i].getQuantity() * this.lineItems[i].getPrice();
@@ -55,7 +55,7 @@ class Order {
         return total;
     }
     toString() {
-        return `Total = [${this.total}], Number = [${this.number}], Ordered = [${this.ordered}], Shipped = [${this.shipped}], Ship to = [${this.shipTo}], Status = [${this.status}]`;
+        return `Number = [${this.number}], Ordered = [${this.ordered}], Shipped = [${this.shipped}], Ship to = [${this.shipTo}], Status = [${this.status}], Total = [${this.total}]`;
     }
 }
 exports.Order = Order;

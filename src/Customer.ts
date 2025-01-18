@@ -1,11 +1,11 @@
 
 import { WebUser } from "./Web_User"
 class Customer {
-    private webUser:WebUser
-    private id:string
-    private address:string
-    private phone:string
-    private email:string
+    protected webUser:WebUser
+    protected id:string
+    protected address:string
+    protected phone:string
+    protected email:string
 
     constructor(webuser:WebUser,id:string,address:string,phone:string,email:string){
 
@@ -25,7 +25,7 @@ class Customer {
         return this.phone
     }
 
-    public getAdress():string{
+    public getAddress():string{
         return this.address
     }
 

@@ -1,5 +1,4 @@
 import { Product } from "./Product"
-
 class LineItem {
 
     private product:Product

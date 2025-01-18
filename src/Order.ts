@@ -10,14 +10,14 @@ class Order {
     private status:OrderStatus
     private total:number = 0
 
-    constructor(lineItems:LineItem[], number:string,ordered:string,shipped:string,ship_to:string,total:number){
-        this.lineItems = lineItems
+    constructor( number:string,ordered:string,shipped:string,ship_to:string,total:number,lineItems:LineItem[]){
+        this.lineItems = lineItems || []
         this.number = number
         this.ordered = ordered
         this.shipped = shipped
         this.shipTo = ship_to
-        this.status = OrderStatus.NEW
-        this.total = total
+        this.status = OrderStatus.HOLD
+        this.total = this.calcTotal()
     }
 
     public getNumber():string{
@@ -41,7 +41,7 @@ class Order {
     }
 
     public getTotal():number{
-        return this.total + this.clacTotal()
+        return this.total
     }
 
     public setOrdered(ordered:string):void{
@@ -64,7 +64,7 @@ class Order {
         this.total = total
     }
 
-    public clacTotal():number{
+    public calcTotal():number{
         let total = 0
         for(let i = 0; i < this.lineItems.length; i++){
             total += this.lineItems[i].getQuantity() * this.lineItems[i].getPrice()
@@ -73,7 +73,7 @@ class Order {
     }
 
     public toString():string{
-        return `Total = [${this.total}], Number = [${this.number}], Ordered = [${this.ordered}], Shipped = [${this.shipped}], Ship to = [${this.shipTo}], Status = [${this.status}]`
+        return `Number = [${this.number}], Ordered = [${this.ordered}], Shipped = [${this.shipped}], Ship to = [${this.shipTo}], Status = [${this.status}], Total = [${this.total}]`
     }
 }
 

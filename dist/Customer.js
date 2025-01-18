@@ -15,7 +15,7 @@ class Customer {
     getPhone() {
         return this.phone;
     }
-    getAdress() {
+    getAddress() {
         return this.address;
     }
     getEmail() {
