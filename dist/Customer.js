@@ -31,7 +31,17 @@ class Customer {
         this.email = email;
     }
     toString() {
-        return `[ WebUser =  ${this.webUser.toString()} ] Customer [ID = ${this.id}],[ Address = ${this.address} ],[ Phone = ${this.phone} ],[ Email = ${this.email}] `;
+        return `
+    -----------------------------------------------------------
+    Customer Information:
+    -----------------------------------------------------------
+    Web User           : ${this.webUser.toString()}
+    Customer ID        : ${this.id}
+    Address            : ${this.address}
+    Phone Number       : ${this.phone}
+    Email              : ${this.email}
+    -----------------------------------------------------------
+    `;
     }
 }
 exports.Customer = Customer;

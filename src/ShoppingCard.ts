@@ -34,7 +34,8 @@ class ShoppingCard extends Account {
     }
 
     public toString():string{
-        return `Account Id = ${super.getAccountId()}, Customer Id =  ${super.getId()} Create Date = ${this.create} Item = ${this.lineItem}`
+        const itemsDescription = this.lineItem.map(item => item.toString()).join(", ")
+        return `Account Id = ${super.getAccountId()}, Customer Id = ${super.getId()}, Cart Date = ${this.create}, Items = [${itemsDescription}]`
     }
 
 }

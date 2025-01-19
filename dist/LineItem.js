@@ -7,6 +7,9 @@ class LineItem {
         this.quantity = quantity;
         this.price = price;
     }
+    getProduct() {
+        return this.product;
+    }
     getQuantity() {
         return this.quantity;
     }

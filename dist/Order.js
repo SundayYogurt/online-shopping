@@ -2,8 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Order = void 0;
 const OrderStatus_1 = require("./OrderStatus");
-class Order {
-    constructor(number, ordered, shipped, ship_to, total, lineItems) {
+const Account_1 = require("./Account");
+class Order extends Account_1.Account {
+    constructor(accountId, billingAddress, is_closed, open, closed, webUser, id, address, phone, email, number, ordered, shipped, ship_to, total, lineItems) {
+        super(accountId, billingAddress, is_closed, open, closed, webUser, id, address, phone, email);
         this.lineItems = [];
         this.total = 0;
         this.lineItems = lineItems || [];
@@ -55,7 +57,34 @@ class Order {
         return total;
     }
     toString() {
-        return `Number = [${this.number}], Ordered = [${this.ordered}], Shipped = [${this.shipped}], Ship to = [${this.shipTo}], Status = [${this.status}], Total = [${this.total}]`;
+        let lineItemsDetails = this.lineItems.map((lineItem) => {
+            const productName = lineItem.getProduct().getName().padEnd(20, ' '); // เพิ่มความยาวให้ชื่อสินค้า
+            const quantity = String(lineItem.getQuantity()).padStart(8, ' '); // เพิ่มช่องว่างให้กับจำนวน
+            const price = String(lineItem.getPrice()).padStart(8, ''); // เพิ่มช่องว่างให้กับราคา
+            const total = String(lineItem.getQuantity() * lineItem.getPrice()).padStart(12, ' '); // เพิ่มช่องว่างให้กับจำนวนเงินทั้งหมด
+            return `${productName} | ${quantity} | ${price} Bath | ${total} Bath`;
+        }).join("\n");
+        return `
+    ------------------------------------------------------------
+    Account Id: ${super.getAccountId()}
+    Customer Id: ${super.getId()}
+    ------------------------------------------------------------
+
+    Product              | Quantity | Price   | Total
+    ------------------------------------------------------------
+    ${lineItemsDetails}
+    ------------------------------------------------------------
+
+    Order Number: ${this.number}
+    Order Date: ${this.ordered}
+    Shipped Date: ${this.shipped}
+    Ship To: ${this.shipTo}
+    Status: ${this.status}
+    ------------------------------------------------------------
+
+    Total Amount: ${this.total} Bath
+    ------------------------------------------------------------
+    `;
     }
 }
 exports.Order = Order;

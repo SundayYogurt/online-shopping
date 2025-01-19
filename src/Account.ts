@@ -69,8 +69,23 @@ class Account extends Customer {
     }
 
     public toStringAccount(): string {
-        return `Account [ID = ${this.accountId}],[ Billing Address = ${this.billingAddress} ],[ Is Closed = ${this.is_closed} ],[ When Open = ${this.open} ],[ When Closed = ${this.closed}],WebUser = ${this.webUser},[ CustomerID = ${this.getIdFromCustomer()} ],address = ${this.address}, Phone Number = ${this.phone} ], email = ${this.email} ]`;
-    }
+    return `
+    ------------------------------------------------------------
+    Account Information:
+    ------------------------------------------------------------
+    Account ID         : ${this.accountId}
+    Billing Address    : ${this.billingAddress}
+    Is Closed          : ${this.is_closed}
+    When Open          : ${this.open}
+    When Closed        : ${this.closed}
+    Web User           : ${this.webUser}
+    Customer ID        : ${this.getIdFromCustomer()}
+    Address            : ${this.address}
+    Phone Number       : ${this.phone}
+    Email              : ${this.email}
+    ------------------------------------------------------------
+    `;
+}
 }
 
 
