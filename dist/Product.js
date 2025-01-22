@@ -13,17 +13,17 @@ class Product {
     getName() {
         return this.name;
     }
-    getSupplier() {
-        return this.supplier;
-    }
     setName(name) {
         this.name = name;
+    }
+    getSupplier() {
+        return this.supplier;
     }
     setSupplier(supplier) {
         this.supplier = supplier;
     }
     toString() {
-        return `ID = [${this.id}], Name = [${this.name}], Supplier = [${this.supplier}]`;
+        return `Product | [id = ${this.id}], [name = ${this.name}], [supplier = ${this.supplier}]`;
     }
 }
 exports.Product = Product;

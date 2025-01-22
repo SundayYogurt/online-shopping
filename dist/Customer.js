@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Customer = void 0;
 class Customer {
-    constructor(webuser, id, address, phone, email) {
-        this.webUser = webuser;
+    constructor(account, webUser, id, address, phone, email) {
+        this.account = account;
+        this.webUser = webUser;
         this.id = id;
         this.address = address;
         this.phone = phone;
@@ -12,36 +13,26 @@ class Customer {
     getId() {
         return this.id;
     }
-    getPhone() {
-        return this.phone;
-    }
     getAddress() {
         return this.address;
-    }
-    getEmail() {
-        return this.email;
     }
     setAddress(address) {
         this.address = address;
     }
+    getPhone() {
+        return this.phone;
+    }
     setPhone(phone) {
         this.phone = phone;
+    }
+    getEmail() {
+        return this.email;
     }
     setEmail(email) {
         this.email = email;
     }
     toString() {
-        return `
-    -----------------------------------------------------------
-    Customer Information:
-    -----------------------------------------------------------
-    Web User           : ${this.webUser.toString()}
-    Customer ID        : ${this.id}
-    Address            : ${this.address}
-    Phone Number       : ${this.phone}
-    Email              : ${this.email}
-    -----------------------------------------------------------
-    `;
+        return `Customer | [ID = ${this.id}], [Address = ${this.address}], [Phone = ${this.phone}], [Email = ${this.email}] WebUser | [${this.webUser.toString()}] [Account | ${this.account.toString()}]`;
     }
 }
 exports.Customer = Customer;

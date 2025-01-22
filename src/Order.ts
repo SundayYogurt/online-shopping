@@ -1,84 +1,66 @@
-import { LineItem } from "./LineItem"
 import { OrderStatus } from "./OrderStatus"
-import { Account } from "./Account"
-import { WebUser} from "./Web_User"
+import { LineItem } from "./LineItem"
+import { Payment } from "./Payment"
 
-class Order extends Account{
-    private lineItems:LineItem[]= []
-    private number:string
-    private ordered:string
-    private shipped:string
-    private shipTo:string
-    private status:OrderStatus
-    private total:number = 0
+export class Order {
+    private lineItems: LineItem[] = []
+    private payment: Payment[] = []
+    private number: string
+    private ordered: string
+    private shipped: string
+    private ship_to: string
+    private status: OrderStatus
+    private total: number = 0
 
-    constructor(
-        accountId: string,
-        billingAddress: string,
-        is_closed: boolean,
-        open: string,
-        closed: string,
-        webUser: WebUser,
-        id: string,
-        address: string,
-        phone: string,
-        email: string,
-        number:string,ordered:string,shipped:string,ship_to:string,total:number,lineItems:LineItem[]){
-            super(accountId, billingAddress, is_closed, open, closed, webUser, id,address,phone,email)
-        this.lineItems = lineItems || []
+    constructor( number: string, ordered: string, shipped: string, ship_to: string){
         this.number = number
         this.ordered = ordered
         this.shipped = shipped
-        this.shipTo = ship_to
-        this.status = OrderStatus.HOLD
-        this.total = this.calcTotal()
+        this.ship_to = ship_to
+        this.status = OrderStatus.NEW
     }
 
     public getNumber():string{
         return this.number
     }
 
-    public getOrdered():string{
+    public getOrderedDate():string{
         return this.ordered
     }
 
-    public getShipped():string{
+    public getShippedDate():string{
         return this.shipped
     }
 
-    public getShipTo():string{
-        return this.shipTo
+    public setShippedDate(shipped: string):void{
+        this.shipped = shipped
     }
 
-    public getStatus():OrderStatus{
+    public getShip_toAddress():string{
+        return this.ship_to
+    }
+
+    public setShip_toAddress(ship: string):void{
+        this.ship_to = ship
+    }
+
+    public getStatus():OrderStatus {
         return this.status
+    }
+
+    public setStatus(status: OrderStatus):void {
+        this.status = status
     }
 
     public getTotal():number{
         return this.total
     }
 
-    public setOrdered(ordered:string):void{
-        this.ordered = ordered
-    }
-
-    public setShipped(shipped:string):void{
-        this.shipped = shipped
-    }
-    
-    public setShipto(shipTo:string):void{
-        this.shipTo = shipTo
-    }
-
-    public setStatus(status:OrderStatus):void{
-        this.status = status
-    }
-
-    public setTotal(total:number):void{
+    public setTotal(total: number):void{
         this.total = total
     }
 
-    public calcTotal():number{
+    public calTotal():number{
         let total = 0
         for(let i = 0; i < this.lineItems.length; i++){
             total += this.lineItems[i].getQuantity() * this.lineItems[i].getPrice()
@@ -86,40 +68,26 @@ class Order extends Account{
         return total
     }
 
-  public toString(): string {
-    let lineItemsDetails = this.lineItems.map((lineItem) => {
-        const productName = lineItem.getProduct().getName().padEnd(20, ' '); // เพิ่มความยาวให้ชื่อสินค้า
-        const quantity = String(lineItem.getQuantity()).padStart(8, ' '); // เพิ่มช่องว่างให้กับจำนวน
-        const price = String(lineItem.getPrice()).padStart(8, ''); // เพิ่มช่องว่างให้กับราคา
-        const total = String(lineItem.getQuantity() * lineItem.getPrice()).padStart(12, ' '); // เพิ่มช่องว่างให้กับจำนวนเงินทั้งหมด
-        
-        return `${productName} | ${quantity} | ${price} Bath | ${total} Bath`;
-    }).join("\n");
+    public getPayments():Payment[]{
+        return this.payment
+    }
 
-    return `
-    ------------------------------------------------------------
-    Account Id: ${super.getAccountId()}
-    Customer Id: ${super.getId()}
-    ------------------------------------------------------------
+    public addPayment(payment: Payment):void{
+        this.payment.push(payment)
+    }
 
-    Product              | Quantity | Price   | Total
-    ------------------------------------------------------------
-    ${lineItemsDetails}
-    ------------------------------------------------------------
+    public addLineItem(lineItems: LineItem):void{
+        this.lineItems.push(lineItems)
+    }
 
-    Order Number: ${this.number}
-    Order Date: ${this.ordered}
-    Shipped Date: ${this.shipped}
-    Ship To: ${this.shipTo}
-    Status: ${this.status}
-    ------------------------------------------------------------
+    public getLineItems():LineItem[]{
+        return this.lineItems
+    }
 
-    Total Amount: ${this.total} Bath
-    ------------------------------------------------------------
-    `;
-}
 
+
+    public toString():string{
+        return `Order | [number = ${this.number}, ordered = ${this.ordered}, shipped = ${this.shipped}, ship_to = ${this.ship_to}, status = ${this.status}, total = ${this.total}, [Payment | ${this.payment}]]`
+    }
 
 }
-
-export {Order}

@@ -4,7 +4,7 @@ exports.UserState = void 0;
 class UserState {
 }
 exports.UserState = UserState;
-UserState.NEW = "new";
-UserState.ACTIVE = "active";
-UserState.BLOCKED = "blocked";
-UserState.BANNED = "banned";
+UserState.NEW = "New";
+UserState.ACTIVE = "Active";
+UserState.BLOCKED = "Blocked";
+UserState.BANNED = "Banned";

@@ -1,64 +1,54 @@
+import { Account } from "./Account"
+import { WebUser } from "./WebUser"
 
-import { WebUser } from "./Web_User"
-class Customer {
-    protected webUser:WebUser
-    protected id:string
-    protected address:string
-    protected phone:string
-    protected email:string
+class Customer{
+    private account: Account
+    private webUser: WebUser
+    private id: string
+    private address: string
+    private phone: string
+    private email: string
 
-    constructor(webuser:WebUser,id:string,address:string,phone:string,email:string){
-
-        this.webUser = webuser
+    constructor(account: Account, webUser: WebUser, id: string, address: string, phone: string, email: string){
+        this.account = account
+        this.webUser = webUser
         this.id = id
         this.address = address
         this.phone = phone
         this.email = email
-
     }
 
-    public getId():string{
+    public getId():string {
         return this.id
     }
 
-    public getPhone():string{
+    public getAddress(): string {
+        return this.address
+    }
+
+    public setAddress(address: string):void{
+        this.address = address
+    }
+
+    public getPhone():string {
         return this.phone
     }
 
-    public getAddress():string{
-        return this.address
+    public setPhone(phone: string){
+        this.phone = phone
     }
 
     public getEmail():string{
         return this.email
     }
-    
-    public setAddress(address:string):void{
-        this.address = address
-    }
 
-    public setPhone(phone:string):void{
-        this.phone = phone
-    }
-
-    public setEmail(email:string):void{
+    public setEmail(email: string):void {
         this.email = email
     }
 
-   public toString(): string {
-    return `
-    -----------------------------------------------------------
-    Customer Information:
-    -----------------------------------------------------------
-    Web User           : ${this.webUser.toString()}
-    Customer ID        : ${this.id}
-    Address            : ${this.address}
-    Phone Number       : ${this.phone}
-    Email              : ${this.email}
-    -----------------------------------------------------------
-    `;
+    public toString():string{
+        return `Customer | [ID = ${this.id}], [Address = ${this.address}], [Phone = ${this.phone}], [Email = ${this.email}] WebUser | [${this.webUser.toString()}] [Account | ${this.account.toString()}]`
+    }
 }
 
-}
-
-export {Customer}
+export { Customer }

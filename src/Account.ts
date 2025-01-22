@@ -1,92 +1,87 @@
-import { Customer } from "./Customer";
-import { WebUser } from "./Web_User";
-class Account extends Customer {
-    protected accountId: string;
-    protected billingAddress: string;
-    protected is_closed: boolean;
-    protected open: string;
-    protected closed: string;
+import { Order } from "./Order";
+import { Payment } from "./Payment";
+import { ShoppingCart } from "./ShoppingCart";
 
-    constructor(
-        accountId: string,
-        billingAddress: string,
-        is_closed: boolean,
-        open: string,
-        closed: string,
-        webUser: WebUser,
-        id: string,
-        address: string,
-        phone: string,
-        email: string
-    ) {
-        super(webUser, id, address, phone, email);
-        this.accountId = accountId;
-        this.billingAddress = billingAddress;
-        this.is_closed = is_closed;
-        this.open = open;
-        this.closed = closed;
-    }
+class Account {
+  private payments: Payment[] = []
+  private shoppingCart: ShoppingCart
+  private orders: Order[] = []
+  private accountId: string;
+  private billing_address: string;
+  private is_closed: boolean;
+  private open: string;
+  private closed: string | null;
 
-    public getIdFromCustomer(): string {
-        return super.getId()
-    }
+  constructor(accountId: string, billing_address: string, is_closed: boolean, open: string, closed: string | null) {
+    this.shoppingCart = new ShoppingCart("now")
+    this.accountId = accountId;
+    this.billing_address = billing_address;
+    this.is_closed = is_closed;
+    this.open = open;
+    this.closed = closed;
+  }
 
-    public getAccountId(): string {
-        return this.accountId;
+  public getId():string {
+    return this.accountId
+  }
 
-    }
+  public getBilling_address():string{
+    return this.billing_address
+  }
 
-    public getAddress(): string {
-        return this.billingAddress;
-    }
+  public setBilling_address(billing_address: string):void{
+    this.billing_address = billing_address
+  }
 
-    public getIsClosed(): boolean {
-        return this.is_closed;
-    }
+  public getIs_closed():boolean{
+    return this.is_closed
+  }
 
-    public getOpen(): string {
-        return this.open;
-    }
+  public setIs_closed(is_closed: boolean):void{
+    this.is_closed = is_closed
+  }
 
-    public getClosed(): string {
-        return this.closed;
-    }
+  public getOpen():string{
+    return this.open
+  }
 
-    public setAddress(address: string) {
-        this.billingAddress = address;
-    }
+  public setOpen(open: string):void{
+    this.open = open
+  }
 
-    public setIsClosed(is_closed: boolean) {
-        this.is_closed = is_closed;
-    }   
+  public getClosed():string | null{
+    return this.closed
+  }
 
-    public setOpen(open: string) {
-        this.open = open;
-    }
+  public setClosed(closed: string | null):void{
+    this.closed = closed
+  }
 
-    public setClosed(closed: string) {
-        this.closed = closed;
-    }
+  public getOrders():Order[]{
+    return this.orders
+  }
 
-    public toStringAccount(): string {
-    return `
-    ------------------------------------------------------------
-    Account Information:
-    ------------------------------------------------------------
-    Account ID         : ${this.accountId}
-    Billing Address    : ${this.billingAddress}
-    Is Closed          : ${this.is_closed}
-    When Open          : ${this.open}
-    When Closed        : ${this.closed}
-    Web User           : ${this.webUser}
-    Customer ID        : ${this.getIdFromCustomer()}
-    Address            : ${this.address}
-    Phone Number       : ${this.phone}
-    Email              : ${this.email}
-    ------------------------------------------------------------
-    `;
+  public addOrder(order: Order):void{
+    this.orders.push(order)
+  }
+
+  public getPayments():Payment[]{
+    return this.payments
+  }
+
+  public addPayment(payment: Payment):void{
+    this.payments.push(payment)
+  }
+
+  public getShoppingCart():ShoppingCart{
+    return this.shoppingCart
+  }
+
+
+  public toString():string {
+    return `Account | [id: ${this.accountId}, billing_address: ${this.billing_address}, is_closed: ${this.is_closed}, open: ${this.open}, closed: ${this.closed},}]]`
+  }
+
 }
-}
-
 
 export { Account }

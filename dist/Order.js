@@ -2,89 +2,68 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Order = void 0;
 const OrderStatus_1 = require("./OrderStatus");
-const Account_1 = require("./Account");
-class Order extends Account_1.Account {
-    constructor(accountId, billingAddress, is_closed, open, closed, webUser, id, address, phone, email, number, ordered, shipped, ship_to, total, lineItems) {
-        super(accountId, billingAddress, is_closed, open, closed, webUser, id, address, phone, email);
+class Order {
+    constructor(number, ordered, shipped, ship_to) {
         this.lineItems = [];
+        this.payment = [];
         this.total = 0;
-        this.lineItems = lineItems || [];
         this.number = number;
         this.ordered = ordered;
         this.shipped = shipped;
-        this.shipTo = ship_to;
-        this.status = OrderStatus_1.OrderStatus.HOLD;
-        this.total = this.calcTotal();
+        this.ship_to = ship_to;
+        this.status = OrderStatus_1.OrderStatus.NEW;
     }
     getNumber() {
         return this.number;
     }
-    getOrdered() {
+    getOrderedDate() {
         return this.ordered;
     }
-    getShipped() {
+    getShippedDate() {
         return this.shipped;
     }
-    getShipTo() {
-        return this.shipTo;
+    setShippedDate(shipped) {
+        this.shipped = shipped;
+    }
+    getShip_toAddress() {
+        return this.ship_to;
+    }
+    setShip_toAddress(ship) {
+        this.ship_to = ship;
     }
     getStatus() {
         return this.status;
     }
-    getTotal() {
-        return this.total;
-    }
-    setOrdered(ordered) {
-        this.ordered = ordered;
-    }
-    setShipped(shipped) {
-        this.shipped = shipped;
-    }
-    setShipto(shipTo) {
-        this.shipTo = shipTo;
-    }
     setStatus(status) {
         this.status = status;
+    }
+    getTotal() {
+        return this.total;
     }
     setTotal(total) {
         this.total = total;
     }
-    calcTotal() {
+    calTotal() {
         let total = 0;
         for (let i = 0; i < this.lineItems.length; i++) {
             total += this.lineItems[i].getQuantity() * this.lineItems[i].getPrice();
         }
         return total;
     }
+    getPayments() {
+        return this.payment;
+    }
+    addPayment(payment) {
+        this.payment.push(payment);
+    }
+    addLineItem(lineItems) {
+        this.lineItems.push(lineItems);
+    }
+    getLineItems() {
+        return this.lineItems;
+    }
     toString() {
-        let lineItemsDetails = this.lineItems.map((lineItem) => {
-            const productName = lineItem.getProduct().getName().padEnd(20, ' '); // เพิ่มความยาวให้ชื่อสินค้า
-            const quantity = String(lineItem.getQuantity()).padStart(8, ' '); // เพิ่มช่องว่างให้กับจำนวน
-            const price = String(lineItem.getPrice()).padStart(8, ''); // เพิ่มช่องว่างให้กับราคา
-            const total = String(lineItem.getQuantity() * lineItem.getPrice()).padStart(12, ' '); // เพิ่มช่องว่างให้กับจำนวนเงินทั้งหมด
-            return `${productName} | ${quantity} | ${price} Bath | ${total} Bath`;
-        }).join("\n");
-        return `
-    ------------------------------------------------------------
-    Account Id: ${super.getAccountId()}
-    Customer Id: ${super.getId()}
-    ------------------------------------------------------------
-
-    Product              | Quantity | Price   | Total
-    ------------------------------------------------------------
-    ${lineItemsDetails}
-    ------------------------------------------------------------
-
-    Order Number: ${this.number}
-    Order Date: ${this.ordered}
-    Shipped Date: ${this.shipped}
-    Ship To: ${this.shipTo}
-    Status: ${this.status}
-    ------------------------------------------------------------
-
-    Total Amount: ${this.total} Bath
-    ------------------------------------------------------------
-    `;
+        return `Order | [number = ${this.number}, ordered = ${this.ordered}, shipped = ${this.shipped}, ship_to = ${this.ship_to}, status = ${this.status}, total = ${this.total}, [Payment | ${this.payment}]]`;
     }
 }
 exports.Order = Order;
